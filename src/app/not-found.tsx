@@ -1,21 +1,21 @@
+import { Header } from "@/components/header";
 import Link from "next/link";
-import { Header } from "../components/header";
 
-const NotFound = () => {
+export default function Error() {
   return (
     <>
       <Header
-        title="You’re on the wrong path."
-        subtitle="This way leads nowhere."
+        title="Oops! Lost in the void?"
+        subtitle="This page took the last train to nowhere."
       />
       <div className="todo-detail-error">
-        <p>Page Not Found</p>
+        <p>We looked everywhere… even under the couch. No page here.</p>
         <Link href="/">
-          <button className="back-button">Back to Home</button>
+          <button className="back-button">
+            Let’s go home before it gets weird
+          </button>
         </Link>
       </div>
     </>
   );
-};
-
-export default NotFound;
+}
