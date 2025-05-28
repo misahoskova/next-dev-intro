@@ -1,6 +1,5 @@
 import { Header } from "@/components/header";
 import prisma from "@/lib/prisma";
-import { Todo } from "@/types";
 import Link from "next/link";
 
 async function getTodo(id: number) {
@@ -11,10 +10,14 @@ async function getTodo(id: number) {
   });
 }
 
-const TodoDetailPage = ({ params }: { params: { id: string } }) => {
+const TodoDetailPage = async ({ params }: { params: { id: string } }) => {
   // Simulating fetching a todo item based on the ID from params
   const id = Number(params.id);
-  const todo: Todo = await getTodo(id);
+  const todo = await getTodo(id);
+
+  if (!todo) {
+    return <div>Not found</div>;
+  }
 
   return (
     <>
