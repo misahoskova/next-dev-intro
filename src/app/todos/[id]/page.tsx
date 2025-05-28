@@ -12,8 +12,8 @@ async function getTodo(id: number) {
 
 const TodoDetailPage = async ({ params }: { params: { id: string } }) => {
   // Simulating fetching a todo item based on the ID from params
-  const id = Number(params.id);
-  const todo = await getTodo(id);
+  const queryParams = await params;
+  const todo = await getTodo(Number(queryParams.id));
 
   if (!todo) {
     return <div>Not found</div>;
