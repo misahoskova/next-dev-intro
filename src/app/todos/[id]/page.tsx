@@ -1,16 +1,20 @@
-import { Header } from "@/components/header";
-import { Todo } from "@/types";
-import Link from "next/link";
+import { Header } from '@/components/header';
+import prisma from '@/lib/prisma';
+import { Todo } from '@/types';
+import Link from 'next/link';
+
+async function getTodo(id: number) {
+  return await prisma.todo.findUnique({
+    where: {
+      id: id,
+    },
+  });
+}
 
 const TodoDetailPage = ({ params }: { params: { id: string } }) => {
   // Simulating fetching a todo item based on the ID from params
-  const todo: Todo = {
-    id: Number(params.id),
-    name: "Sample Todo",
-    description: "This is a sample todo item.",
-    completed: false,
-    priority: 3,
-  };
+  const id = Number(params.id);
+  const todo: Todo = await getTodo(id);
 
   return (
     <>
@@ -19,13 +23,13 @@ const TodoDetailPage = ({ params }: { params: { id: string } }) => {
         <div className="todo-detail-card">
           <h2>{todo.name}</h2>
           <div className="todo-detail-status">
-            Status:{" "}
-            <span className={todo.completed ? "completed" : "active"}>
-              {todo.completed ? "Completed" : "Active"}
+            Status:{' '}
+            <span className={todo.completed ? 'completed' : 'active'}>
+              {todo.completed ? 'Completed' : 'Active'}
             </span>
           </div>
           <div className="todo-detail-status">
-            Priority: <span className={"completed"}>{todo.priority}</span>
+            Priority: <span className={'completed'}>{todo.priority}</span>
           </div>
 
           {todo.description && (
@@ -40,7 +44,7 @@ const TodoDetailPage = ({ params }: { params: { id: string } }) => {
             <button className="back-button">Back to Home</button>
           </Link>
           <button className="complete-button">
-            {todo.completed ? "Undo" : "Complete"}
+            {todo.completed ? 'Undo' : 'Complete'}
           </button>
         </div>
       </div>

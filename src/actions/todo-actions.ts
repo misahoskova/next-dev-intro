@@ -1,19 +1,16 @@
-"use server";
+'use server';
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath } from 'next/cache';
+import prisma from '@/lib/prisma';
 
-const API_URL = "https://eli-workshop.vercel.app/api/users/xsmrj00/todos";
 export async function createTodo(formData: FormData) {
-  const todoName = formData.get("todo-text") as string;
+  const todoName = formData.get('todo-text') as string;
   const newTodo = {
     name: todoName,
   };
-  await fetch(API_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(newTodo),
+  await prisma.todo.create({
+    data: newTodo,
   });
-  revalidatePath("/");
+
+  revalidatePath('/');
 }
